@@ -21,7 +21,20 @@
 package org.rivierarobotics.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.rivierarobotics.subsystems.vision.PIVision;
 
 public class Robot extends TimedRobot {
-
+	PIVision vision = new PIVision();
+	
+	@Override
+	public void robotInit() {
+		super.robotInit();
+		
+		SmartDashboard.putBoolean("Target Detected", vision.targetDetected());
+		SmartDashboard.putNumber("Target X", vision.getTx());
+		SmartDashboard.putNumber("Target Y", vision.getTy());
+		SmartDashboard.putNumber("Distance", vision.getDistance());
+		SmartDashboard.putNumber("Target in Degrees", vision.getAdjustedTxAndCalc());
+	}
 }
