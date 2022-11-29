@@ -20,21 +20,69 @@
 
 package org.rivierarobotics.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.rivierarobotics.subsystems.drive.DriveTrain;
 import org.rivierarobotics.subsystems.vision.PIVision;
 
 public class Robot extends TimedRobot {
 	PIVision vision = new PIVision();
 	
+	private DriveTrain driveTrain;
+	private Joystick joystick1;
+	private Joystick joystick2;
+	
 	@Override
 	public void robotInit() {
 		super.robotInit();
+		
+		driveTrain = new DriveTrain();
+		joystick1 = new Joystick(0);
+		joystick2 = new Joystick(1);
 		
 		SmartDashboard.putBoolean("Target Detected", vision.targetDetected());
 		SmartDashboard.putNumber("Target X", vision.getTx());
 		SmartDashboard.putNumber("Target Y", vision.getTy());
 		SmartDashboard.putNumber("Distance", vision.getDistance());
 		SmartDashboard.putNumber("Target in Degrees", vision.getAdjustedTxAndCalc());
+	}
+	
+	@Override
+	public void teleopPeriodic(){
+        if (joystick1.getRawButton(1)){
+	        setArcade(vision.getTx(), vision.getTy());
+        } /*else {
+            driveTrain.setPower(0.0, 0.0)
+        }*/
+		double x1 = joystick1.getX();
+		double y2 = joystick2.getY();
+		//DriveTrain.setPower(x1, y2);
+		setArcade(x1, y2);
+	}
+	private void setArcade(double rotate, double power){
+		double max = Math.max(Math.abs(rotate), Math.abs(power));
+		double diff = power - rotate;
+		double sum = power + rotate;
+		double left;
+		double right;
+		if (power > 0){
+			if (rotate > 0){
+				left = max;
+				right = diff;
+			} else {
+				left = sum;
+				right = max;
+			}
+		} else {
+			if (rotate > 0){
+				left = sum;
+				right = -max;
+			} else {
+				left = -max;
+				right = diff;
+			}
+		}
+		driveTrain.setPower(left, right);
 	}
 }
