@@ -1,7 +1,7 @@
 /*
  * This file is part of GradleRIO-Redux-example, licensed under the GNU General Public License (GPLv3).
  *
- * Copyright (c) Riviera Robotics <https://github.com/Team5818>
+ * Copyright (c) Octobots <https://github.com/Octobots9084>
  * Copyright (c) contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,13 +18,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.rivierarobotics.robot;
+package org.octobots.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.rivierarobotics.subsystems.drive.DriveTrain;
-import org.rivierarobotics.subsystems.vision.PIVision;
+import org.octobots.subsystems.drive.DriveTrain;
+import org.octobots.subsystems.vision.PIVision;
 
 public class Robot extends TimedRobot {
 	PIVision vision = new PIVision();
@@ -51,8 +51,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic(){
         if (joystick1.getRawButton(1)){
-	        setArcade(vision.getTx(), vision.getTy());
-        } /*else {
+//	        setArcade(vision.getTx(), vision.getTy());
+	        setArcade(28, 2);
+	
+        }
+		/*else {
             driveTrain.setPower(0.0, 0.0)
         }*/
 		double x1 = joystick1.getX();
