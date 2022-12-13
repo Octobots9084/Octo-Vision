@@ -1,7 +1,7 @@
 /*
  * This file is part of GradleRIO-Redux-example, licensed under the GNU General Public License (GPLv3).
  *
- * Copyright (c) Riviera Robotics <https://github.com/Team5818>
+ * Copyright (c) Octobots <https://github.com/Octobots9084>
  * Copyright (c) contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,10 +18,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.rivierarobotics.robot;
+package org.octobots.subsystems.drive;
 
-import edu.wpi.first.wpilibj.TimedRobot;
-
-public class Robot extends TimedRobot {
-
+public class DriveTrain {
+    private final DriveSide left;
+    private final DriveSide right;
+    
+    public DriveTrain(){
+        left = new DriveSide(true);
+        right = new DriveSide(false);
+    }
+    public void setPower (double l, double r){
+        left.setPower(l);
+        right.setPower(r);
+    }
+    
+    public void setArcade(double x, double y){
+        double left;
+        double right;
+        if (y >= 0.0) {
+            left = y+x;
+            right = y-x;
+        } else {
+            left = y-x;
+            right = y+x;
+        }
+        setPower(left, right);
+    }
 }
