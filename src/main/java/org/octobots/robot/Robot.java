@@ -62,6 +62,12 @@ public class Robot extends TimedRobot {
 		double y2 = joystick2.getY();
 		//DriveTrain.setPower(x1, y2);
 		setArcade(x1, y2);
+		
+		SmartDashboard.putBoolean("Target Detected", vision.targetDetected());
+		SmartDashboard.putNumber("Target X", vision.getTx());
+		SmartDashboard.putNumber("Target Y", vision.getTy());
+		SmartDashboard.putNumber("Distance", vision.getDistance());
+		SmartDashboard.putNumber("Target in Degrees", vision.getAdjustedTxAndCalc());
 	}
 	private void setArcade(double rotate, double power){
 		double max = Math.max(Math.abs(rotate), Math.abs(power));
